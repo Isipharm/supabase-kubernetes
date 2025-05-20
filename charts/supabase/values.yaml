@@ -62,8 +62,8 @@ secret:
   # secret used to access the studio dashboard
   # leave it empty to disable dashboard authentication
   dashboard:
-    # username: ""
-    # password: ""
+    username: supabase
+    password: supabase
     # specify existing secret, which takes precedence over variables above
     # secretRef: ""
     # override secret keys for existing secret refs
