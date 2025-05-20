@@ -31,9 +31,9 @@ secret:
   # database credentials
   # these fields must be provided even if using external database
   db:
-    username: postgres
-    password: example123456
-    database: postgres
+    username: "postgres"
+    password: "example123456"
+    database: "postgres"
     # specify existing secret, which takes precedence over variables above
     secretRef: ""
     # override secret keys for existing secret refs
@@ -43,12 +43,12 @@ secret:
       database: database
   # analytics Logflare API key
   analytics:
-    apiKey: ""
+    apiKey: "your-super-secret-and-long-logflare-key"
     # specify existing secret, which takes precedence over variable above
     secretRef: ""
     # override secret keys for existing secret refs
     secretRefKey:
-      apiKey: your-super-secret-and-long-logflare-key
+      apiKey: apiKey
   # smtp will be used to reference secret including smtp credentials
   smtp:
     username: your-mail@example.com
