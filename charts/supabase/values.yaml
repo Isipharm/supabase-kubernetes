@@ -18,9 +18,9 @@ secret:
   # Anon & Service key: Studio, Storage, Kong
   # JWT Secret: Analytics, Auth, Rest, Realtime, Storage
   jwt:
-    anonKey: ""
-    serviceKey: ""
-    secret: ""
+    anonKey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE
+    serviceKey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJzZXJ2aWNlX3JvbGUiLAogICAgImlzcyI6ICJzdXBhYmFzZS1kZW1vIiwKICAgICJpYXQiOiAxNjQxNzY5MjAwLAogICAgImV4cCI6IDE3OTk1MzU2MDAKfQ.DaYlNEoUrrEn2Ig7tqibS-PHK5vgusbcbo7X36XVt4Q
+    secret: your-super-secret-jwt-token-with-at-least-32-characters-long
     # specify existing secret, which takes precedence over variables above
     secretRef: ""
     # override secret keys for existing secret refs
@@ -31,9 +31,9 @@ secret:
   # database credentials
   # these fields must be provided even if using external database
   db:
-    username: ""
-    password: ""
-    database: ""
+    username: postgres
+    password: example123456
+    database: postgres
     # specify existing secret, which takes precedence over variables above
     secretRef: ""
     # override secret keys for existing secret refs
@@ -48,11 +48,11 @@ secret:
     secretRef: ""
     # override secret keys for existing secret refs
     secretRefKey:
-      apiKey: apiKey
+      apiKey: your-super-secret-and-long-logflare-key
   # smtp will be used to reference secret including smtp credentials
   smtp:
-    # username: ""
-    # password: ""
+    username: your-mail@example.com
+    password: example123456
     # specify existing secret, which takes precedence over variables above
     # secretRef: ""
     # override secret keys for existing secret refs
@@ -91,7 +91,7 @@ db:
   image:
     repository: supabase/postgres
     pullPolicy: IfNotPresent
-    tag: "latest"
+    tag: "15.8.1.060"
   imagePullSecrets: []
   replicaCount: 1
   nameOverride: ""
@@ -177,7 +177,7 @@ studio:
   image:
     repository: supabase/studio
     pullPolicy: IfNotPresent
-    tag: "latest"
+    tag: "2025.05.19-sha-3487831"
   imagePullSecrets: []
   replicaCount: 1
   nameOverride: ""
@@ -252,7 +252,7 @@ auth:
   image:
     repository: supabase/gotrue
     pullPolicy: IfNotPresent
-    tag: "latest"
+    tag: "v2.172.1"
   imagePullSecrets: []
   replicaCount: 1
   nameOverride: ""
@@ -349,11 +349,11 @@ auth:
 # Rest Service
 rest:
   # Enable postgrest provisioning
-  enabled: true
+  enabled: true  
   image:
     repository: postgrest/postgrest
     pullPolicy: IfNotPresent
-    tag: "latest"
+    tag: "v12.2.12"
   imagePullSecrets: []
   nameOverride: ""
   fullnameOverride: ""
@@ -1150,3 +1150,4 @@ minio:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+
