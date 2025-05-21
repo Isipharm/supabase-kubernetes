@@ -152,7 +152,7 @@ db:
     #   memory: 128Mi
   persistence:
     enabled: true
-    storageClassName: managed-csi
+    storageClassName: ""
     annotations: {}
     size: 8Gi
     accessModes:
