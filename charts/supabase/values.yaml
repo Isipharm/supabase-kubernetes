@@ -139,8 +139,7 @@ db:
   #       secretName: my_secret
   #       items:
   #       - key: my_secret.txt
-  #         path: name_of_file_in_container.txt
-  resources: {}
+  #         path: name_of_file_in_container.txt  resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -150,8 +149,7 @@ db:
     #   memory: 128Mi
     # requests:
     #   cpu: 100m
-    #   memory: 128Mi
-  persistence:
+    #   memory: 128Mi  persistence:
     enabled: true
     storageClassName: ""
     annotations: {}
@@ -159,6 +157,40 @@ db:
     accessModes:
       - ReadWriteOnce
     class: ""
+    # Configuration pour AzureDisk (recommandé pour la base de données)
+    azureDisk:
+      # Définir à true pour utiliser AzureDisk
+      enabled: true
+      # Nom de la StorageClass à utiliser (si non défini, utilise "azure-disk-premium-ssd")
+      storageClassName: "azure-disk-premium-ssd"
+      # Type de stockage Azure (Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS)
+      storageAccountType: "Standard_LRS"
+      # Type de disque Azure (Managed, Shared)
+      kind: "Managed"
+      # Mode de mise en cache (None, ReadOnly, ReadWrite)
+      cachingMode: "ReadOnly"
+      # Mode de liaison du volume (Immediate, WaitForFirstConsumer)
+      volumeBindingMode: "Immediate"
+      # Permettre l'expansion du volume
+      allowVolumeExpansion: true
+      # Politique de récupération (Delete, Retain)
+      reclaimPolicy: "Delete"
+      # Options de montage pour AzureDisk
+      mountOptions: []
+    # Configuration pour AzureFile (pour le stockage partagé)
+    azureFile:
+      # Définir à true pour utiliser AzureFile
+      enabled: false
+      # Nom de la StorageClass à utiliser (si non défini, utilise "azure-file")
+      storageClassName: "azure-file"
+      # Type de stockage Azure (Standard_LRS, Premium_LRS, StandardSSD_LRS)
+      skuName: "Premium_LRS"
+      # Région Azure où le stockage sera provisionné
+      location: "westeurope"
+      # Permettre l'expansion du volume
+      allowVolumeExpansion: true
+      # Politique de récupération (Delete, Retain)
+      reclaimPolicy: "Delete"
   autoscaling:
     enabled: true
     minReplicas: 1

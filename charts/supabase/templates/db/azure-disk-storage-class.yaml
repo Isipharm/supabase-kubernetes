@@ -1,0 +1,20 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ .Values.db.persistence.azureDisk.storageClassName | default "azure-disk-premium-ssd" }}
+provisioner: kubernetes.io/azure-disk
+parameters:
+  storageaccounttype: {{ .Values.db.persistence.azureDisk.storageAccountType | default "Premium_LRS" }}
+  kind: {{ .Values.db.persistence.azureDisk.kind | default "Managed" }}
+  cachingMode: {{ .Values.db.persistence.azureDisk.cachingMode | default "ReadOnly" }}
+volumeBindingMode: {{ .Values.db.persistence.azureDisk.volumeBindingMode | default "Immediate" }}
+{{- if .Values.db.persistence.azureDisk.allowVolumeExpansion }}
+allowVolumeExpansion: {{ .Values.db.persistence.azureDisk.allowVolumeExpansion }}
+{{- end }}
+{{- if .Values.db.persistence.azureDisk.reclaimPolicy }}
+reclaimPolicy: {{ .Values.db.persistence.azureDisk.reclaimPolicy }}
+{{- end }}
+{{- with .Values.db.persistence.azureDisk.mountOptions }}
+mountOptions:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
