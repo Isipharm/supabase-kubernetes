@@ -7,10 +7,10 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: {{ .Values.db.persistence.azureDisk.storageClassName | default "azure-disk-premium-ssd" }}
+  name: {{ .Values.db.persistence.azureDisk.storageClassName | default "azure-disk-standard" }}
 provisioner: kubernetes.io/azure-disk
 parameters:
-  storageaccounttype: {{ .Values.db.persistence.azureDisk.storageAccountType | default "Premium_LRS" }}
+  storageaccounttype: {{ .Values.db.persistence.azureDisk.storageAccountType | default "Standard_LRS" }}
   kind: {{ .Values.db.persistence.azureDisk.kind | default "Managed" }}
   cachingMode: {{ .Values.db.persistence.azureDisk.cachingMode | default "ReadOnly" }}
 volumeBindingMode: {{ .Values.db.persistence.azureDisk.volumeBindingMode | default "Immediate" }}
@@ -68,7 +68,7 @@ metadata:
 spec:
   # Utilisez storageClassName pour AzureDisk ou AzureFile en fonction de la configuration
   {{- if .Values.db.persistence.azureDisk.enabled }}
-  storageClassName: {{ .Values.db.persistence.azureDisk.storageClassName | default "azure-disk-premium-ssd" }}
+  storageClassName: {{ .Values.db.persistence.azureDisk.storageClassName | default "azure-disk-standard" }}
   {{- else if .Values.db.persistence.azureFile.enabled }}
   storageClassName: {{ .Values.db.persistence.azureFile.storageClassName | default "azure-file" }}
   {{- else if .Values.db.persistence.storageClassName }}

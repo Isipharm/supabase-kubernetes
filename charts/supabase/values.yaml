@@ -162,7 +162,7 @@ db:
       # Définir à true pour utiliser AzureDisk
       enabled: true
       # Nom de la StorageClass à utiliser (si non défini, utilise "azure-disk-premium-ssd")
-      storageClassName: "azure-disk-premium-ssd"
+      storageClassName: "azure-disk-standard"
       # Type de stockage Azure (Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS)
       storageAccountType: "Standard_LRS"
       # Type de disque Azure (Managed, Shared)
