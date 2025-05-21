@@ -1,60 +1,5 @@
 {{- if .Values.db.enabled -}}
 {{- if .Values.db.persistence.enabled -}}
-{{- if or .Values.db.persistence.azureDisk.enabled .Values.db.persistence.azureFile.enabled }}
-
-{{- if .Values.db.persistence.azureDisk.enabled }}
-# StorageClass AzureDisk pour la base de données
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: {{ .Values.db.persistence.azureDisk.storageClassName | default "azure-disk-standard" }}
-provisioner: kubernetes.io/azure-disk
-parameters:
-  storageaccounttype: {{ .Values.db.persistence.azureDisk.storageAccountType | default "Standard_LRS" }}
-  kind: {{ .Values.db.persistence.azureDisk.kind | default "Managed" }}
-  cachingMode: {{ .Values.db.persistence.azureDisk.cachingMode | default "ReadOnly" }}
-volumeBindingMode: {{ .Values.db.persistence.azureDisk.volumeBindingMode | default "Immediate" }}
-{{- if .Values.db.persistence.azureDisk.allowVolumeExpansion }}
-allowVolumeExpansion: {{ .Values.db.persistence.azureDisk.allowVolumeExpansion }}
-{{- end }}
-{{- if .Values.db.persistence.azureDisk.reclaimPolicy }}
-reclaimPolicy: {{ .Values.db.persistence.azureDisk.reclaimPolicy }}
-{{- end }}
-{{- with .Values.db.persistence.azureDisk.mountOptions }}
-mountOptions:
-  {{- toYaml . | nindent 2 }}
-{{- end }}
----
-{{- end }}
-
-{{- if .Values.db.persistence.azureFile.enabled }}
-# StorageClass AzureFile pour la base de données
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: {{ .Values.db.persistence.azureFile.storageClassName | default "azure-file" }}
-provisioner: kubernetes.io/azure-file
-parameters:
-  skuName: {{ .Values.db.persistence.azureFile.skuName | default "Premium_LRS" }}
-  location: {{ .Values.db.persistence.azureFile.location | default "westeurope" }}
-mountOptions:
-  - dir_mode=0777
-  - file_mode=0777
-  - uid=1000
-  - gid=1000
-  - mfsymlinks
-  - cache=strict
-  - actimeo=30
-{{- if .Values.db.persistence.azureFile.allowVolumeExpansion }}
-allowVolumeExpansion: {{ .Values.db.persistence.azureFile.allowVolumeExpansion }}
-{{- end }}
-{{- if .Values.db.persistence.azureFile.reclaimPolicy }}
-reclaimPolicy: {{ .Values.db.persistence.azureFile.reclaimPolicy }}
-{{- end }}
----
-{{- end }}
-{{- end }}
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -66,12 +11,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  # Utilisez storageClassName pour AzureDisk ou AzureFile en fonction de la configuration
-  {{- if .Values.db.persistence.azureDisk.enabled }}
-  storageClassName: {{ .Values.db.persistence.azureDisk.storageClassName | default "azure-disk-standard" }}
-  {{- else if .Values.db.persistence.azureFile.enabled }}
-  storageClassName: {{ .Values.db.persistence.azureFile.storageClassName | default "azure-file" }}
-  {{- else if .Values.db.persistence.storageClassName }}
+  {{- if .Values.db.persistence.storageClassName }}
   storageClassName: {{ .Values.db.persistence.storageClassName }}
   {{- end }}
   accessModes:
